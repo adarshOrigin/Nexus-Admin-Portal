@@ -1,37 +1,108 @@
-# Nexus-Admin-Portal
+# Nexus Admin Portal
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A comprehensive Role-Based Access Control (RBAC) administration portal built with Next.js, Prisma, and NextAuth.js (Auth.js). This application manages users, permissions, and loan applications with a secure approval workflow.
 
-## Getting Started
+## 🌟 Features
 
-First, run the development server:
+*   **Role-Based Access Control (RBAC):** Distinct roles for **Admin**, **Manager**, and **Viewer**.
+*   **Authentication:** Secure login via Google OAuth and Credentials (Email/Password).
+*   **User Management:** Admins can view, edit, and manage user roles and specific permissions.
+*   **Access Request System:** Users can request role upgrades (e.g., Viewer -> Manager), which Admins must review and approve.
+*   **Loan Management:** Managers and Admins can view, approve, or reject loan applications.
+*   **Responsive Dashboard:** A modern, mobile-responsive UI built with Tailwind CSS and Shadcn UI.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Getting Started
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Prerequisites
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+*   Node.js 18+
+*   PostgreSQL (Local or Supabase)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Installation
 
-## Learn More
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/adarshOrigin/Nexus-Admin-Portal.git
+    cd Nexus-Admin-Portal
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3.  **Environment Setup:**
+    Create a `.env` file in the root directory:
+    ```env
+    # Database Connection
+    DATABASE_URL="postgresql://user:password@localhost:5432/nexus_db"
+    
+    # NextAuth / Auth.js
+    AUTH_SECRET="your-super-secret-key-generated-by-npx-auth-secret"
+    NEXTAUTH_URL="http://localhost:3000"
+    
+    # Google OAuth (Optional for local dev if using credentials)
+    AUTH_GOOGLE_ID="your-google-client-id"
+    AUTH_GOOGLE_SECRET="your-google-client-secret"
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4.  **Database Setup:**
+    ```bash
+    # Generate Prisma Client
+    npx prisma generate
+    
+    # Push schema to database
+    npx prisma db push
+    
+    # Seed the database with initial users and data
+    npx prisma db seed
+    ```
 
-## Production Environment Setup
+5.  **Run Development Server:**
+    ```bash
+    npm run dev
+    ```
+
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📖 User Guide
+
+### 1. Logging In
+*   **Admin Access:**
+    *   **Email:** `admin@nexus.com`
+    *   **Password:** `password123`
+    *   *Note: Has full access to all settings, user management, and requests.*
+*   **Manager Access:**
+    *   **Email:** `manager@nexus.com`
+    *   **Password:** `password123`
+    *   *Note: Can manage loans and view analytics.*
+*   **Viewer Access:**
+    *   **Email:** `viewer@nexus.com`
+    *   **Password:** `password123`
+    *   *Note: Read-only access initially.*
+*   **New Users:** Sign in with Google. You will be assigned the **VIEWER** role by default.
+
+### 2. Requesting Role Upgrades
+If you are a **Viewer** and need more permissions:
+1.  Go to your **Profile** (Click avatar in top right -> Profile & Permissions).
+2.  Select the desired role (**Manager** or **Admin**).
+3.  Fill out the reason for the request.
+4.  Submit.
+5.  An Admin will review your request in the "Access Requests" tab.
+
+### 3. Managing Access (Admins Only)
+*   Navigate to **Admin > Access Requests**.
+*   Review pending requests.
+*   **Approve:** The user's role is automatically updated.
+*   **Reject:** The user stays in their current role.
+*   Navigate to **Admin > Users** to manually edit specific permissions for any user.
+
+### 4. Loan Management
+*   **Managers** and **Admins** can see the Loan List on the Dashboard.
+*   Click **Approve** or **Reject** on pending loans.
+*   **Viewers** cannot perform these actions (buttons will show a "Request Access" modal).
+
+## 📦 Deployment
 
 To deploy this application to production (e.g., Vercel) with a **Supabase** database:
 
@@ -66,5 +137,3 @@ AUTH_GOOGLE_SECRET="..."
 2.  Import project in Vercel.
 3.  Add the environment variables above.
 4.  Deploy!
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

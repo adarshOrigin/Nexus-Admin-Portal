@@ -63,7 +63,7 @@ export default async function UsersPage() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {users.map((user) => {
+                        {users.map((user: any) => {
                             // Cast permissions to any because of TS type sync issues
                             const perms = (user as any).permissions as string[] || []
 
