@@ -5,7 +5,12 @@ import { redirect } from "next/navigation"
 import { AdminDashboard } from "@/components/dashboard/admin-view"
 import { ViewerDashboard } from "@/components/dashboard/viewer-view"
 
-export default async function DashboardPage() {
+
+export default async function DashboardPage(props: { searchParams?: Promise<{ [key: string]: string | string[] | undefined }> }) {
+    const searchParams = await props.searchParams
+    const query = typeof searchParams?.query === 'string' ? searchParams.query : ''
+    const page = Number(searchParams?.page) || 1
+    
     const session = await auth()
 
     if (!session?.user) {
@@ -31,7 +36,7 @@ export default async function DashboardPage() {
             </div>
 
             {(userRole === Role.ADMIN || userRole === Role.MANAGER) ? (
-                <AdminDashboard userRole={userRole} />
+                <AdminDashboard userRole={userRole} query={query} currentPage={page} />
             ) : (
                 <ViewerDashboard />
             )}

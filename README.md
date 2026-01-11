@@ -137,3 +137,19 @@ AUTH_GOOGLE_SECRET="..."
 2.  Import project in Vercel.
 3.  Add the environment variables above.
 4.  Deploy!
+
+## 🔄 Scheduled Database Maintenance
+
+This project includes a Cron Job configuration (`vercel.json`) to reset the database weekly (Every Sunday at 00:00 UTC). This is useful for demo environments to keep data fresh.
+
+### Setup on Vercel:
+
+1.  Go to your Vercel Project Settings > **Cron Jobs**.
+2.  You will see the job for `/api/cron/seed`.
+3.  Go to **Environment Variables**.
+4.  Add a new variable:
+    *   **Key:** `CRON_SECRET`
+    *   **Value:** *<A strong random string>*
+5.  **Crucial Step:** You must also use this same secret when manually testing or if you want Vercel to secure it. Vercel automatically secures cron routes if you use their Cron dashboard, but setting this variable ensures your API endpoint is protected from public access.
+
+*Note: If you do NOT want this behavior, simply remove the `vercel.json` file.*
