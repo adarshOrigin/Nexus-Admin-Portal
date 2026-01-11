@@ -11,8 +11,8 @@ interface AnalyticsChartsProps {
 
 export function AnalyticsCharts({ loansByStatus, recentActivity }: AnalyticsChartsProps) {
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-            <Card className="col-span-4">
+        <div className="grid gap-4 grid-cols-1 lg:grid-cols-7">
+            <Card className="lg:col-span-4">
                 <CardHeader>
                     <CardTitle>Loan Volume (Last 7 Days)</CardTitle>
                 </CardHeader>
@@ -44,7 +44,7 @@ export function AnalyticsCharts({ loansByStatus, recentActivity }: AnalyticsChar
                     </div>
                 </CardContent>
             </Card>
-            <Card className="col-span-3">
+            <Card className="lg:col-span-3">
                 <CardHeader>
                     <CardTitle>Application Status</CardTitle>
                 </CardHeader>
