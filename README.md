@@ -31,8 +31,40 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Production Environment Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To deploy this application to production (e.g., Vercel) with a **Supabase** database:
+
+### 1. Database URL Configuration
+Supabase provides two connection strings. You must set **BOTH** in your production environment variables:
+
+*   **`DATABASE_URL`**: Use the **Transaction Pooler URL** (Port 6543).
+    *   Format: `postgres://[user]:[password]@aws-0-region.pooler.supabase.com:6543/postgres?pgbouncer=true`
+    *   *Note: Ensure `?pgbouncer=true` is appended.*
+*   **`DIRECT_URL`**: Use the **Session Pooler / Direct URL** (Port 5432).
+    *   Format: `postgres://[user]:[password]@aws-0-region.supabase.com:5432/postgres`
+
+### 2. Environment Variables
+Ensure the following are set in your deployment dashboard (e.g., Vercel Project Settings):
+
+```bash
+# Database
+DATABASE_URL="..."
+DIRECT_URL="..."
+
+# Authentication
+AUTH_SECRET="Generating a new secret with 'npx auth secret'"
+NEXTAUTH_URL="https://your-domain.vercel.app" 
+
+# OAuth (Google Cloud Console)
+AUTH_GOOGLE_ID="..."
+AUTH_GOOGLE_SECRET="..."
+```
+
+### 3. Deploy
+1.  Push code to GitHub.
+2.  Import project in Vercel.
+3.  Add the environment variables above.
+4.  Deploy!
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
